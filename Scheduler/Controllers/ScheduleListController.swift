@@ -15,8 +15,10 @@ class ScheduleListController: UIViewController {
   // data - an array of events
   private var events = [Event]()
   
-  public let dataPersistence = DataPersistence(filename: "schedules.plist")
-  
+ // public let dataPersistence = DataPersistence(filename: "schedules.plist")
+  public let dataPersistence = DataPersistence<Event>(filename: "schedules.plist")
+    
+    
   private var isEditingTableView = false {
     didSet { // property observer
       // toggle editing mode of table view
@@ -122,17 +124,14 @@ class ScheduleListController: UIViewController {
         
        // TODO:
         createEventController.event = event
-       
-        
         
         // createEventController.event = evemt
-        
         present(createEventController, animated: true)
-        
     }
-    
-    
 }
+
+
+
 
 // MARK:- UITableViewDataSource
 extension ScheduleListController: UITableViewDataSource {
@@ -185,6 +184,6 @@ extension ScheduleListController: UITableViewDataSource {
 extension ScheduleListController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let event = events[indexPath.row]
-        
+        showCreateEventVC(event)
     }
 }
