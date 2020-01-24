@@ -48,6 +48,7 @@ class DataPersistence {
       throw DataPersistenceError.writingError(error)
     }
   }
+    
   
   // Read
   public func loadItems() throws -> [Event] {
@@ -71,7 +72,35 @@ class DataPersistence {
   }
   
   // Update
-  
+    @discardableResult // silences the warning if the return value is not used by the caller
+    public func update(_ oldItem: Event, with newItem:  Event) -> Bool{
+        
+        if let index = items.firstIndex(of: oldItem) {  // is oldItem == currentItem
+            let result = update(newItem, at: index)
+            return result
+        }
+        return false
+    }
+    
+    
+    public func update(_ item: Event, at index: Int) -> Bool {
+        items[index] = item
+        
+        // save items to documents directory
+        do {
+            try saveItemsToDocumentsDirectory()
+            return true
+        } catch {
+            return false
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
   // Delete
   public func deleteItem(at index: Int) throws {
     items.remove(at: index)

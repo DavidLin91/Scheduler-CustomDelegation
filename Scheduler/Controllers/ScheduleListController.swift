@@ -78,7 +78,14 @@ class ScheduleListController: UIViewController {
   private func update(oldEvent: Event, with newEvent: Event) {
     // update item in documents directory
     
+    
     // call load items to update events array
+    // retrieves object from document diretory
+    // appends to our events array
+    // reload the tableview
+    loadItems()
+    
+    
   }
   
   private func createNewEvent(event: Event) {
